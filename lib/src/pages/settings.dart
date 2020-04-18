@@ -25,6 +25,8 @@ class _SettingsPageState extends State<SettingsPage> {
     _textControllert = new TextEditingController(text:  pref.nombreUsuario);
     genero = pref.genero;
     _colorSecundarios = pref.colorSecundario;
+    pref.ultimaPagina = SettingsPage.routeName;
+
   }
 
   @override
