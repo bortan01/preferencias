@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:preferencias/src/share_preferencias/preferencias_usuario.dart';
 import 'package:preferencias/src/widgets/menu_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class SettingsPage extends StatefulWidget {
@@ -11,18 +12,19 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _colorSecundarios = false;
+  bool _colorSecundarios;
   int genero = 1;
   String nombre = 'pedro';
   TextEditingController _textControllert;
-
+  final pref = new PreferenciasUsuario();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _textControllert = new TextEditingController(text:  nombre);
-    cargarPreferencias();
+    _textControllert = new TextEditingController(text:  pref.nombreUsuario);
+    genero = pref.genero;
+    _colorSecundarios = pref.colorSecundario;
   }
 
   @override
@@ -30,7 +32,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
         appBar: new AppBar(
           title: new Text("ajustes"),
+          backgroundColor: (pref.colorSecundario)? Colors.teal : Colors.blue,
         ),
+
         drawer: MenuWidget(),
         body: new ListView(
           children: <Widget>[
@@ -49,6 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 onChanged: (value) {
                   setState(() {
                     _colorSecundarios = value;
+                    pref.colorSecundario = value;
                   });
                 }),
             new RadioListTile(
@@ -69,8 +74,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 controller: _textControllert,
                 decoration: new InputDecoration(
                     labelText: 'nombre',
-                    helperText: "nombre de la persona usando el telefono"),
-                onChanged: (String texto) {},
+                    helperText: "nombre de la persona usando el telefono"
+                ),
+                onChanged: (texto) {
+                  pref.nombreUsuario= texto;
+                  //print(texto);
+                },
               ),
               padding: EdgeInsets.symmetric(horizontal: 10.0),
             )
@@ -78,17 +87,17 @@ class _SettingsPageState extends State<SettingsPage> {
         ));
   }
 
-  Future<void> _setSelectedRadio(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('genero', value);
-    setState(() {
-      genero = value;
-    });
+  _setSelectedRadio(int value)  {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    await prefs.setInt('genero', value);
+//    setState(() {
+//      genero = value;
+//    });
+  pref.genero = value;
+  genero = value;
+  setState(() {});
+
   }
 
-  Future<void> cargarPreferencias() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    genero = preferences.getInt('genero');
-    setState(() {});
-  }
+
 }
