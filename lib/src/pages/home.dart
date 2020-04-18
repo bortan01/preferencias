@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           new Text("color secundario"),
           new Divider(),
-          new Text("genero " + prefs.genero ),
+          new Text("genero " + prefs.genero.toString() ),
           new Divider(),
           new Text("nombre usuario"),
           new Divider(),

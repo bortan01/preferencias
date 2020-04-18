@@ -1,20 +1,20 @@
 import 'package:shared_preferences/shared_preferences.dart';
-class PreferenciasUsuario{
-static final PreferenciasUsuario _instanciona = new PreferenciasUsuario._internal();
-PreferenciasUsuario._internal();
-factory PreferenciasUsuario(){
-  return _instanciona;
-}
-SharedPreferences _prefs;
 
-initPrefs() async {
-  this._prefs = await SharedPreferences.getInstance();
-}
+class PreferenciasUsuario {
 
+  static final PreferenciasUsuario _instancia = new PreferenciasUsuario._internal();
 
-//  bool _colorSecundario;`
-//  int _genero;
-//  String _nombre;
+  factory PreferenciasUsuario() {
+    return _instancia;
+  }
+
+  PreferenciasUsuario._internal();
+
+  SharedPreferences _prefs;
+
+  initPrefs() async {
+    this._prefs = await SharedPreferences.getInstance();
+  }
 
   // GET y SET del Genero
   get genero {
@@ -54,7 +54,3 @@ initPrefs() async {
   }
 
 }
-
-
-
-
